@@ -7,6 +7,11 @@ If dictor doesnt find a value for a key, or the data is missing the key, the ret
 
 dictor is polite with Exception errors commonly encountered when parsing large Dictionaries/JSONs
 
+## Installation
+```
+pip install dictor
+```
+
 ## Examples
 
 Heres a YAML representation of the JSON used in this example
