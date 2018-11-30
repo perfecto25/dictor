@@ -1,11 +1,11 @@
 from setuptools import setup
 
-setup(name='dictro',
+setup(name='dictor',
       version='0.0.1',
-      description='',
-      url='https://github.com/perfecto25/dictro',
+      description='an elegant dictionary and JSON handler',
+      url='https://github.com/perfecto25/dictor',
       author='mike.reider',
       author_email='mike.reider@gmail.com',
       license='MIT',
-      packages=['dictro'],
+      packages=['dictor'],
       zip_safe=False)
