@@ -142,7 +142,7 @@ ValueError: missing value for ['characters']['Princess Leia']
 ```
 
 ---
-## Passing a varibale into search path
+## Passing a variable into search path
 if you need to pass a variable into search path
 ```
 who = "Barfolomew"
