@@ -1,0 +1,26 @@
+{
+    "spaceballs": {
+        "genre": "comedy",
+        "year": 1987,
+        "quote": "Evil will always triumph because good is dumb"
+    },
+    "robocop": {
+        "genre": "scifi",
+        "year": 1989,
+        "quote": "Dead or alive youre coming with me"
+    },
+    "terminator": [
+    {
+        "terminator 1": {
+            "year": 1987,
+            "genre": ["futureshock", "scifi"]
+        }
+    },
+    {
+        "terminator 2": {
+            "year": 1992,
+            "genre": ["nuclear war", "scifi"]
+        }
+    }
+    ]
+}
