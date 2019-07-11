@@ -7,6 +7,7 @@
     "robocop": {
         "genre": "scifi",
         "year": 1989,
+        "actors": ["joe", "bob", "fred"],
         "quote": "Dead or alive youre coming with me"
     },
     "terminator": [

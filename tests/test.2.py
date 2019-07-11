@@ -100,25 +100,45 @@ def dictor(data, path=None, default=None, checknone=False):
     #             else:
     #                 path = path + "['"+key+"']"
     # print(path)
-
-
-    try:
-        print(keys)
-        value = reduce(lambda c, k: c.get(k, {}), keys, data)
-        #value = reduce(dict.get, data, path)
+    print(keys)
+    for i in range(len(keys)):
+        print(i)
+        key = keys[i]
+        print('key: ' + key)
+        try:
+            val = data[key]
+            data = val
+            print('data: ' + str(data))
+        except (KeyError, ValueError, IndexError, TypeError) as err:
+            return default
         
-        print('----')
-        print(value)
-    except (KeyError, ValueError, IndexError, TypeError) as err:
-        value = default
-    finally:
-        if checknone:
-            if not value:
-                raise ValueError('missing value for %s' % path)
-        if bool(value) is False or value is None:
-            value = default
-        return value
+    # for key in keys:
+    #     try:
+    #         print('data'+key)
+    #         val = data[key]
+    #         print('==' + val)
+    #     except (KeyError, ValueError, IndexError, TypeError) as err:
+    #         return 'none2'
+        
+    # try:
+    #     print(keys)
+    #     for key in keys:
 
-print(dictor(BASIC, 'robocop'))
+    #     value = reduce(lambda c, k: c.get(k, {}), keys, data)
+    #     #value = reduce(dict.get, data, path)
+        
+    #     print('----')
+    #     print(value)
+    # except (KeyError, ValueError, IndexError, TypeError) as err:
+    #     value = default
+    # finally:
+    #     if checknone:
+    #         if not value:
+    #             raise ValueError('missing value for %s' % path)
+    #     if bool(value) is False or value is None:
+    #         value = default
+    #     return value
+
+print(dictor(BASIC, 'robocop.actors.2'))
 
 #print(dictor(LIST, '2.name'))
