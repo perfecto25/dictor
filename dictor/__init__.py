@@ -3,51 +3,57 @@
 # coding=utf-8
 
 from __future__ import print_function
-import sys
+import json
 
-# import Reduce if py3
-if sys.version_info[0] == 3:
-    from functools import reduce
-
-def dictor(data, path=None, default=None, checknone=False):
+def dictor(data, path=None, default=None, checknone=False, ignorecase=False):
     '''
     Usage:
     get a value from a Dictionary key
     > dictor(data, "employees.John Doe.first_name")
 
     parse key index and fallback on default value if None,
-    > dictor(data, "employees[5].first_name", default="No employee found")
+    > dictor(data, "employees.5.first_name", "No employee found")
 
     pass a parameter
-    > dictor(data, "company.name.{}".format(my_company))
+    > dictor(data, "company.{}.address".format(my_company))
+
+    if using Python 3, can use F-strings to pass parameter
+    > param = 'MyCompany'
+    > dictor(data, f"company.{param}.address")
 
     lookup a 3rd element of List, on second key, lookup index=5
-    > dictor(data, "3.first.second[5]")
+    > dictor(data, "3.first.second.5")
 
     lookup a nested list of lists
-    > dictor(data, "0.first[1].2.second.third[0].2"
+    > dictor(data, "0.first.1.2.second.third.0.2"
 
     check if return value is None, if it is, raise an error
     > dictor(data, "some.key.value", checknone=True)
-    > ValueError: missing value for ['some']['key']['value']
-    '''
+    > ValueError: value not found for search path: "some.key.value"
 
-    import json
+    ignore letter casing when searching
+    > dictor(data, "employees.Fred Flintstone", ignorecase=True)
+    '''
 
     if path is None or path == '':
         return json.dumps(data)
 
-    value = None
     keys = path.split(".")
-  
-    try:        
-        value = reduce(lambda c, k: c.get(k, {}), keys, data)
-        if value is None:
-            value = default
-    except (KeyError, ValueError, IndexError, TypeError) as err:
-        value = default
-    finally:
-        if checknone:
-            if not value:
-                raise ValueError('missing value for %s' % path)
-        return value
+
+    for i in range(len(keys)):
+        key = keys[i]
+        try:
+            if key.isdigit():
+                val = data[int(key)]
+            else:
+                val = data[key]
+            data = val
+        except (KeyError, ValueError, IndexError, TypeError) as err:
+            val = default
+
+    if checknone:
+        if not val:
+            raise ValueError('value not found for search path: "%s"' % path)
+        
+    return val
+

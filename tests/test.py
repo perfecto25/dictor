@@ -24,7 +24,7 @@ with open('list.json') as data:
 def test_simple_list():
     ''' test for basic list value '''
     result = dictor(LIST, '1.genre')
-    eq_('tragedy', result)
+    eq_('documentary', result)
 
 def test_simple_dict():
     ''' test for value in a dictionary '''
@@ -33,7 +33,7 @@ def test_simple_dict():
 
 def test_complex_dict():
     ''' test parsing down a list and getting dict value '''
-    result = dictor(BASIC, 'terminator[1].terminator 2.genre[0]')
+    result = dictor(BASIC, 'terminator.1.terminator 2.genre.0')
     eq_('nuclear war', result)
 
 @raises(ValueError)
