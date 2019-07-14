@@ -1,4 +1,12 @@
 {
+    "AUSTIN Powers": {
+        "year": 1996,
+        "genre": "geopolitical thriller"
+    },
+    "dirty.harry": {
+        "year": 1977,
+        "genre": "romance"
+    },
     "spaceballs": {
         "genre": "comedy",
         "year": 1987,
@@ -7,6 +15,7 @@
     "robocop": {
         "genre": "scifi",
         "year": 1989,
+        "actors": ["joe", "bob", "fred"],
         "quote": "Dead or alive youre coming with me"
     },
     "terminator": [
