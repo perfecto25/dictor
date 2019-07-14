@@ -1,36 +1,15 @@
+
 [
     {
-        "type": "json",
-        "message": [
-            [
-                {
-                    "english": "apple",
-                    "spanish": "manzana"
-                },
-                {
-                    "english": "banana",
-                    "spanish": "platano"
-                }
-            ],
-            [
-                {
-                    "english": "cherry",
-                    "spanish": "cereza"
-                },
-                {
-                    "english": "durian",
-                    "spanish": "durian",
-                    "color": [
-                        "black",
-                        "brown",
-                        "orange"
-                    ]
-                }
-            ]
-        ]
+        "name": "spaceballs",
+        "genre": "comedy"
     },
     {
-        "type": "json",
-        "message": "None"
+        "name": "gone with the wind",
+        "genre": "tragedy"
+    },
+    {
+        "name": "titanic",
+        "genre": "comedy"
     }
 ]

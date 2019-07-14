@@ -1,7 +1,7 @@
 # Dictor - the dictionary doctor
 ## An elegant dictionary and JSON handler
 
-Version 0.0.2
+Version 0.1.1
 
 Dictor is a Python 2 and 3 compatible JSON/Dictionary handler.
 
@@ -13,6 +13,9 @@ Dictor is polite with Exception errors commonly encountered when parsing large D
 
 Using Dictor eliminates the repeated use of try/except blocks in your code when dealing with lookups of large JSON structures, as well as providing flexibility for inserting fallback values on missing keys/values.
 
+
+
+---
 
 ## Installation
 ```
@@ -98,7 +101,7 @@ Shwartz
 ---
 
 
-## Fallback Value & Error handling
+## Fallback Value & Error Handling
 by default, dictor will return a None if a dictionary does not contain your search path,
 ```
 print(dictor(data, 'characters.Princess Leia'))
@@ -217,6 +220,30 @@ print(dictor(data, '0.message.1.1.color.2'))
 
 orange
 ```
+
+---
+## Handling Key lookups with dots
+
+if you need to look up  a key value that has a dot in the key name, for example
+
+```
+{
+    "dirty.harry": {
+        "year": 1977,
+        "genre": "romance"
+    },
+}
+```
+
+searching for dictor(data, 'dirty.harry') will return a None since Dictor sees the dot-separated entry as 2 separate keys.
+
+To search for a key with a dot in it, simply use an escape character "\\.",
+```
+dictor(data, 'dirty\.harry')
+
+{u'genre': u'romance', u'year': 1977}
+```
+
 ---
 ## Testing
 testing is done using Python Nose. Tests are located in 'tests' directory.
@@ -228,10 +255,11 @@ shell> nosetests test.py
 ---
 ## Release Notes
 
-### 0.0.2
+### 0.1.1
 - removed "eval()" function for added security
 - entire lookup engine was rewritten for increased speed and simplicy
 - added 'ignorecase' parameter
+- added ability to escape dot character for keys with dots in them
 - looking up lists indexes was modified, 
 
     in previous version, looking up an element looked like this,

@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='dictor',
-      version='0.0.2',
+      version='0.1.1',
       description='an elegant dictionary and JSON handler',
       url='https://github.com/perfecto25/dictor',
       author='mike.reider',
