@@ -18,6 +18,9 @@
         "actors": ["joe", "bob", "fred"],
         "quote": "Dead or alive youre coming with me"
     },
+    "#": {
+            "random,,,@": { "chars": "({%^&$\"" }
+    },
     "terminator": [
     {
         "terminator 1": {
@@ -32,4 +35,5 @@
         }
     }
     ]
+
 }
