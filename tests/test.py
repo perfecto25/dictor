@@ -23,7 +23,6 @@ with open('list.json') as data:
 with open('large.json') as data:
     LARGE = json.load(data)
 
-
 def test_simple_list():
     ''' test for basic list value '''
     result = dictor(LIST, '1.name')
@@ -33,6 +32,24 @@ def test_simple_dict():
     ''' test for value in a dictionary '''
     result = dictor(BASIC, 'robocop.year')
     eq_(1989, result)
+
+def test_non_existent_value():
+    ''' test a non existent key search '''
+    result = dictor(BASIC, 'non.existent.value')
+    eq_(None, result)
+
+    result = dictor({'lastname': 'Doe'}, 'foo.lastname')
+    eq_(None, result)
+
+def test_partial_exist_value():
+    ''' partially existing value '''
+
+    result = dictor(BASIC, 'spaceballs.year.fakekey')
+    eq_(None, result)
+
+def test_random_chars():
+    result = dictor(BASIC, '#.random,,,@.chars')
+    eq_('({%^&$"', result)
 
 def test_complex_dict():
     ''' test parsing down a list and getting dict value '''

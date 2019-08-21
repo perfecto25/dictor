@@ -53,21 +53,26 @@ def dictor(data, path=None, default=None, checknone=False, ignorecase=False):
             if key.isdigit():
                 val = data[int(key)]
             else:
-                
                 if ignorecase:
                     key = key.lower()
 
                 if '__dictor__' in key:
                     key = key.replace('__dictor__', '.')
 
-                val = data[key]
+                try:
+                    val = data[key]
+                except (KeyError, ValueError, IndexError, TypeError):
+                    if checknone:
+                        val = False
+                        break
+                    val = default
+                    break
+
             data = val
         except (KeyError, ValueError, IndexError, TypeError):
             val = default
-
+    
     if checknone:
-        if not val:
-            raise ValueError('value not found for search path: "%s"' % path)
-        
+        if not val or val == default:
+            raise ValueError('value not found for search path: "%s"' % path)        
     return val
-

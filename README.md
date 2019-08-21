@@ -1,7 +1,7 @@
 # Dictor - the dictionary doctor
 ## An elegant dictionary and JSON handler
 
-Version 0.1.1
+Version 0.1.2
 
 Dictor is a Python 2 and 3 compatible JSON/Dictionary handler.
 
@@ -254,6 +254,9 @@ shell> nosetests test.py
 ```
 ---
 ## Release Notes
+
+### 0.1.2
+- fixed lookup bug
 
 ### 0.1.1
 - removed "eval()" function for added security
