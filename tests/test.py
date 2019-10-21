@@ -65,10 +65,14 @@ def test_ignore_letter_casing():
     ''' test ignoring letter upper/lower case '''
     result = dictor(BASIC, 'austin PoWeRs.year', ignorecase=True)
     eq_(1996, result)
+    
+def test_numeric_key_handling():
+    ''' test handling keys that are numbers '''
+    result = dictor(BASIC, '1492.year')
+    eq_(1986, result)
 
 def test_parsing_large_JSON():
     ''' test parsing large JSON file '''
-    
     result = dictor(LARGE, '0.tags.3')
     eq_('sunt', result)
 
