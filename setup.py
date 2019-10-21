@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
       long_description = fh.read()
 
 setup(name='dictor',
-      version='0.1.2',
+      version='0.1.3',
       description='an elegant dictionary and JSON handler',
       long_description=long_description,
       long_description_content_type="text/markdown",
