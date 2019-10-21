@@ -1,4 +1,8 @@
 {
+    "1492": {
+        "year": 1986,
+        "genre": "documentary"
+    },
     "AUSTIN Powers": {
         "year": 1996,
         "genre": "geopolitical thriller"
@@ -15,25 +19,36 @@
     "robocop": {
         "genre": "scifi",
         "year": 1989,
-        "actors": ["joe", "bob", "fred"],
+        "actors": [
+            "joe",
+            "bob",
+            "fred"
+        ],
         "quote": "Dead or alive youre coming with me"
     },
     "#": {
-            "random,,,@": { "chars": "({%^&$\"" }
+        "random,,,@": {
+            "chars": "({%^&$\""
+        }
     },
     "terminator": [
-    {
-        "terminator 1": {
-            "year": 1987,
-            "genre": ["futureshock", "scifi"]
+        {
+            "terminator 1": {
+                "year": 1987,
+                "genre": [
+                    "futureshock",
+                    "scifi"
+                ]
+            }
+        },
+        {
+            "terminator 2": {
+                "year": 1992,
+                "genre": [
+                    "nuclear war",
+                    "scifi"
+                ]
+            }
         }
-    },
-    {
-        "terminator 2": {
-            "year": 1992,
-            "genre": ["nuclear war", "scifi"]
-        }
-    }
     ]
-
 }
