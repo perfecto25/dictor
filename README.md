@@ -278,5 +278,11 @@ shell> nosetests test.py
 - initial project released
 
 ---
+## packaging
+    python setup.py sdist
+    pip install twine
+    twine upload dist/*
+
 ## Contributors
 - Mike Reider (May the Shwartz be with you)
+
