@@ -35,28 +35,18 @@ def dictor(data, path=None, default=None, checknone=False, ignorecase=False, pat
     '''
 
     if path is None or path == '':
-        return json.dumps(data)
-
-    # handle keys with dots in them
-    if r'\.' in path:
-        path = path.replace(r'\.', '__dictor__')
+        return data
 
     try:
         for key in path.split(pathsep):
-            if key.isdigit():
-                if type(data) is list:
-                    val = data[int(key)]
-                else:
-                    val = data[key]
+            if isinstance(data, (list, tuple)):
+                val = data[int(key)]
             else:
                 if ignorecase:
                     for datakey in data.keys():
                         if datakey.lower() == key.lower():
                              key = datakey
                              break
-
-                if '__dictor__' in key:
-                    key = key.replace('__dictor__', '.')
 
                 val = data[key]
             data = val

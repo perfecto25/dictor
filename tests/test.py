@@ -63,7 +63,7 @@ def test_pathsep():
 
 def test_keys_with_dots():
     ''' test parsing keys with dots in them '''
-    result = dictor(BASIC, 'dirty\.harry.genre')
+    result = dictor(BASIC, 'dirty.harry/genre', pathsep="/")
     eq_('romance', result)
 
 def test_ignore_letter_casing():
