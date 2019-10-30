@@ -1,11 +1,10 @@
-
 #!/usr/bin/env python
 # coding=utf-8
 
 from __future__ import print_function
 import json
 
-def dictor(data, path=None, default=None, checknone=False, ignorecase=False):
+def dictor(data, path=None, default=None, checknone=False, ignorecase=False, pathsep="."):
     '''
     Usage:
     get a value from a Dictionary key
@@ -42,14 +41,8 @@ def dictor(data, path=None, default=None, checknone=False, ignorecase=False):
     if r'\.' in path:
         path = path.replace(r'\.', '__dictor__')
 
-    keys = path.split(".")
-
-    if ignorecase:
-        data = {k.lower():v for k,v in data.items()}
-
-    for i in range(len(keys)):
-        key = keys[i]
-        try:
+    try:
+        for key in path.split(pathsep):
             if key.isdigit():
                 if type(data) is list:
                     val = data[int(key)]
@@ -57,24 +50,19 @@ def dictor(data, path=None, default=None, checknone=False, ignorecase=False):
                     val = data[key]
             else:
                 if ignorecase:
-                    key = key.lower()
+                    for datakey in data.keys():
+                        if datakey.lower() == key.lower():
+                             key = datakey
+                             break
 
                 if '__dictor__' in key:
                     key = key.replace('__dictor__', '.')
 
-                try:
-                    val = data[key]
-                except (KeyError, ValueError, IndexError, TypeError):
-                    if checknone:
-                        val = False
-                        break
-                    val = default
-                    break
-
+                val = data[key]
             data = val
-        except (KeyError, ValueError, IndexError, TypeError):
-            val = default
-                
+    except (KeyError, ValueError, IndexError, TypeError):
+        val = default
+            
     if checknone:
         if not val or val == default:
             raise ValueError('value not found for search path: "%s"' % path)        
