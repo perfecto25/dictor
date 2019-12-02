@@ -56,14 +56,24 @@ def test_complex_dict():
     result = dictor(BASIC, 'terminator.1.terminator 2.genre.0')
     eq_('nuclear war', result)
 
+def test_pathsep():
+    ''' test parsing down a list and getting dict value '''
+    result = dictor(BASIC, 'terminator/1/terminator 2/genre/0', pathsep='/')
+    eq_('nuclear war', result)
+
 def test_keys_with_dots():
     ''' test parsing keys with dots in them '''
-    result = dictor(BASIC, 'dirty\.harry.genre')
+    result = dictor(BASIC, 'dirty.harry/genre', pathsep="/")
     eq_('romance', result)
 
 def test_ignore_letter_casing():
     ''' test ignoring letter upper/lower case '''
     result = dictor(BASIC, 'austin PoWeRs.year', ignorecase=True)
+    eq_(1996, result)
+    
+def test_ignore_letter_casing_nested():
+    ''' test ignoring letter upper/lower case '''
+    result = dictor(BASIC, 'austin PoWeRs.Year', ignorecase=True)
     eq_(1996, result)
     
 def test_numeric_key_handling():
