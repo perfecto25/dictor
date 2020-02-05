@@ -56,5 +56,4 @@ def dictor(data, path=None, default=None, checknone=False, ignorecase=False, pat
     if checknone:
         if val is None or val == default:
             raise ValueError('value not found for search path: "%s"' % path)
-
     return val
