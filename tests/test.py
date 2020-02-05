@@ -40,6 +40,11 @@ def test_non_existent_value():
 
     result = dictor({'lastname': 'Doe'}, 'foo.lastname')
     eq_(None, result)
+    
+def test_zero_value():
+    ''' test a Zero value - should return 0 '''
+    result = dictor(BASIC, 'terminator.2.terminator 3.year', checknone=True)
+    eq_(0, result)
 
 def test_partial_exist_value():
     ''' partially existing value '''

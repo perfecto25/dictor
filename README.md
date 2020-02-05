@@ -252,6 +252,9 @@ testing is done using Python Nose. Tests are located in 'tests' directory.
 ---
 ## Release Notes
 
+### 0.1.5
+- checknone updated to only error out on None values, 0 values are accepted
+
 ### 0.1.4
 - lookup engine update
 - ability to provide new type of path separator
