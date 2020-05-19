@@ -1,7 +1,7 @@
 # Dictor - the dictionary doctor
 ## An elegant dictionary and JSON handler
 
-Version 0.1.5
+Version 0.1.6
 
 Dictor is a Python 2 and 3 compatible JSON/Dictionary handler.
 
@@ -240,6 +240,50 @@ To search for a key with a dot in the name, simply use a Path Separator flag, th
 
     {'romance'}
 
+---
+## Searching specific keys
+Dictor has the ability to search for specific keys and output a list of values. For example, to search for all values that match "name" key
+
+
+```
+data = {
+    "planets": [
+        {
+            "name": "Mars",
+            "type": "rock",
+            "attributes": {
+                "name": "named after Roman god of war",
+                "color": "red",
+                "size" : "28,230 km"
+            }
+        },
+        {
+            "name": "Neptune",
+            "type": "gas",
+            "attributes": {
+                "name": "named after Roman god of ocean",
+                "color": "blue",
+                "size" : "338,382 km"
+            }
+        },
+    ]
+}
+```
+
+simply pass the **search='key_name'** flag
+
+```
+print(dictor(data, 'planets', search='name'))
+>> ['Mars', 'Neptune']
+```
+
+If search key is non existent, dictor will pass a None. In this case you can pass a default fallback value,
+
+```
+print(dictor(data, 'planets', search='fake_key', default='couldnt find value'))
+>> couldnt find value
+```
+
 
 ---
 ## Testing
@@ -251,6 +295,9 @@ testing is done using Python Nose. Tests are located in 'tests' directory.
 
 ---
 ## Release Notes
+### 0.1.6
+- added ability to search keys, will return a list of key values
+- added Pretty flag to pretty print JSON output
 
 ### 0.1.5
 - checknone updated to only error out on None values, 0 values are accepted

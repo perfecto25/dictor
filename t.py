@@ -5,7 +5,7 @@ import sys
 from loguru import logger
 
 
-def dictor(data, path=None, default=None, checknone=False, ignorecase=False, pathsep=".", search=None):
+def dictor(data, path=None, default=None, checknone=False, ignorecase=False, pathsep=".", search=None, s2=None):
     '''
     Usage:
     get a value from a Dictionary key
@@ -26,37 +26,47 @@ def dictor(data, path=None, default=None, checknone=False, ignorecase=False, pat
     > ValueError: value not found for search path: "some.key.value"
     ignore letter casing when searching
     > dictor(data, "employees.Fred Flintstone", ignorecase=True)
+    search data for specific keys (will return a list of all keys it finds)
+    > dictor(data, "employees", search="name")
     '''
-    
-    if search is None and path is None or path == '':
+
+    logger.debug('0')
+    if s2 is None and (path is None or path == ''):
+        logger.debug('4')
         return data
            
     try:
-        for key in path.split(pathsep):
-            if isinstance(data, (list, tuple)):    
-                val = data[int(key)]
-            else:
-                if ignorecase:
-                    for datakey in data.keys():
-                        if datakey.lower() == key.lower():
-                             key = datakey
-                             break
-                val = data[key]
-            data = val
+        if path:
+            for key in path.split(pathsep):
+                if isinstance(data, (list, tuple)):    
+                    val = data[int(key)]
+                else:
+                    if ignorecase:
+                        for datakey in data.keys():
+                            if datakey.lower() == key.lower():
+                                key = datakey
+                                break
+                    val = data[key]
+                data = val
             
-            
+        logger.debug('3')
         if search:
-            search_ret = []               
+            search_ret = []     
+            logger.debug('2')          
             if isinstance(data, (list, tuple)):
+                logger.debug('list')
                 for d in data:
                     for key in d.keys():
+                        logger.warning(d.keys())
                         if key == search:
                             try:
                                 search_ret.append(d[key])
-                            except (KeyError, ValueError, IndexError, TypeError):
+                            except (KeyError, ValueError, IndexError, TypeError, AttributeError):
                                 pass	    
             else:
+                logger.debug(6)
                 for key in data.keys():
+                    logger.debug(data.keys())
                     if key == search:
                         try:
                             search_ret.append(data[key])
@@ -69,6 +79,12 @@ def dictor(data, path=None, default=None, checknone=False, ignorecase=False, pat
     except (KeyError, ValueError, IndexError, TypeError, AttributeError):
         val = default
             
+    if s2:
+        logger.error('8')
+        logger.error(data)
+        if s2 in data:
+            logger.error('contains')
+            val = 'contains!'
     if checknone:
         if val is None or val == default:
             raise ValueError('value not found for search path: "%s"' % path)
@@ -76,7 +92,7 @@ def dictor(data, path=None, default=None, checknone=False, ignorecase=False, pat
 
 
 with open('tests/list.json') as data:
-    basic = json.load(data)
+    a = json.load(data)
 
 d = {
     "planets": [
@@ -101,4 +117,6 @@ d = {
     ]
 }
 
-print(dictor(basic, search='name'))
+
+#print(dictor(d, dictor(d, 'planets', search='attributes'),  search="size", default="couldnt find value"))
+print(dictor(d, 'planets', s2='size'))

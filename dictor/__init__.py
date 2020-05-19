@@ -5,6 +5,7 @@ from __future__ import print_function
 import json
 
 
+
 def dictor(data, path=None, default=None, checknone=False, ignorecase=False, pathsep=".", search=None):
     '''
     Usage:
@@ -29,33 +30,33 @@ def dictor(data, path=None, default=None, checknone=False, ignorecase=False, pat
     search data for specific keys (will return a list of all keys it finds)
     > dictor(data, "employees", search="name")
     '''
-    
-    if path is None or path == '':
+
+    if search is None and (path is None or path == ''):
         return data
            
     try:
-        for key in path.split(pathsep):
-            if isinstance(data, (list, tuple)):    
-                val = data[int(key)]
-            else:
-                if ignorecase:
-                    for datakey in data.keys():
-                        if datakey.lower() == key.lower():
-                             key = datakey
-                             break
-                val = data[key]
-            data = val
-            
-            
+        if path:
+            for key in path.split(pathsep):
+                if isinstance(data, (list, tuple)):    
+                    val = data[int(key)]
+                else:
+                    if ignorecase:
+                        for datakey in data.keys():
+                            if datakey.lower() == key.lower():
+                                key = datakey
+                                break
+                    val = data[key]
+                data = val
+
         if search:
-            search_ret = []               
+            search_ret = []            
             if isinstance(data, (list, tuple)):
                 for d in data:
                     for key in d.keys():
                         if key == search:
                             try:
                                 search_ret.append(d[key])
-                            except (KeyError, ValueError, IndexError, TypeError):
+                            except (KeyError, ValueError, IndexError, TypeError, AttributeError):
                                 pass	    
             else:
                 for key in data.keys():
@@ -74,6 +75,4 @@ def dictor(data, path=None, default=None, checknone=False, ignorecase=False, pat
     if checknone:
         if val is None or val == default:
             raise ValueError('value not found for search path: "%s"' % path)
-    
     return val
-
