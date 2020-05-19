@@ -1,8 +1,8 @@
-#!/usr/bin/env python
-# coding=utf-8
-
+#!/usr/bin/env python3
 from __future__ import print_function
 import json
+import sys
+from loguru import logger
 
 
 def dictor(data, path=None, default=None, checknone=False, ignorecase=False, pathsep=".", search=None):
@@ -26,11 +26,9 @@ def dictor(data, path=None, default=None, checknone=False, ignorecase=False, pat
     > ValueError: value not found for search path: "some.key.value"
     ignore letter casing when searching
     > dictor(data, "employees.Fred Flintstone", ignorecase=True)
-    search data for specific keys (will return a list of all keys it finds)
-    > dictor(data, "employees", search="name")
     '''
     
-    if path is None or path == '':
+    if search is None and path is None or path == '':
         return data
            
     try:
@@ -74,6 +72,33 @@ def dictor(data, path=None, default=None, checknone=False, ignorecase=False, pat
     if checknone:
         if val is None or val == default:
             raise ValueError('value not found for search path: "%s"' % path)
-    
     return val
 
+
+with open('tests/list.json') as data:
+    basic = json.load(data)
+
+d = {
+    "planets": [
+        {
+            "name": "Mars",
+            "type": "rock",
+            "attributes": {
+                "name": "named after Roman god of war",
+                "color": "red",
+                "size" : "28,230 km"
+            }
+        },
+        {
+            "name": "Neptune",
+            "type": "gas",
+            "attributes": {
+                "name": "named after Roman god of ocean",
+                "color": "blue",
+                "size" : "338,382 km"
+            }
+        },
+    ]
+}
+
+print(dictor(basic, search='name'))
