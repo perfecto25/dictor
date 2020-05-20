@@ -4,7 +4,8 @@
 from __future__ import print_function
 import json
 
-def dictor(data, path=None, default=None, checknone=False, ignorecase=False, pathsep="."):
+
+def dictor(data, path=None, default=None, checknone=False, ignorecase=False, pathsep=".", search=None, pretty=False):
     '''
     Usage:
     get a value from a Dictionary key
@@ -25,28 +26,70 @@ def dictor(data, path=None, default=None, checknone=False, ignorecase=False, pat
     > ValueError: value not found for search path: "some.key.value"
     ignore letter casing when searching
     > dictor(data, "employees.Fred Flintstone", ignorecase=True)
+    search data for specific keys (will return a list of all keys it finds)
+    > dictor(data, "employees", search="name")
+    pretty-print output
+    > dictor(data, "employees", pretty=True)
     '''
+    def __format(data, pretty):
+        ''' formats output if pretty=True '''
+        if pretty:
+            return json.dumps(data, indent=4, sort_keys=True)
+        else:
+            return data
 
-    if path is None or path == '':
-        return data
-
+    if search is None and (path is None or path == ''):
+        return __format(data, pretty)
+           
     try:
-        for key in path.split(pathsep):
-            if isinstance(data, (list, tuple)):
-                val = data[int(key)]
-            else:
-                if ignorecase:
-                    for datakey in data.keys():
-                        if datakey.lower() == key.lower():
-                             key = datakey
-                             break
-
-                val = data[key]
-            data = val
-    except (KeyError, ValueError, IndexError, TypeError):
-        val = default
+        if path:
+            for key in path.split(pathsep):
+                if isinstance(data, (list, tuple)): 
+                    val = data[int(key)]
+                else:
+                    if ignorecase:
+                        for datakey in data.keys():
+                            if datakey.lower() == key.lower():
+                                key = datakey
+                                break
+                    if key in data:
+                        val = data[key]
+                    else:
+                        val = None
+                        break
+                data = val
             
+        if search:
+            search_ret = []     
+            if isinstance(data, (list, tuple)):
+                for d in data:
+                    for key in d.keys():
+                        if key == search:
+                            try:
+                                search_ret.append(d[key])
+                            except (KeyError, ValueError, IndexError, TypeError, AttributeError):
+                                pass	    
+            else:
+                for key in data.keys():
+                    if key == search:
+                        try:
+                            search_ret.append(data[key])
+                        except (KeyError, ValueError, IndexError, TypeError, AttributeError):
+                            pass
+            if search_ret: 
+                val = search_ret
+            else:
+                val = default
+    except (KeyError, ValueError, IndexError, TypeError, AttributeError):
+        val = default
+ 
     if checknone:
         if val is None or val == default:
-            raise ValueError('value not found for search path: "%s"' % path)        
-    return val
+            raise ValueError('value not found for search path: "%s"' % path)
+    
+    
+    if val is None or val == '':
+        return default
+    else:
+        return __format(val, pretty)
+

@@ -99,5 +99,15 @@ def test_exception():
     ''' test for non existent index value '''
     dictor(LIST, '5.genre', checknone=True)
 
+def test_searching_list_JSON():
+    ''' test searching list JSON file '''
+    result = dictor(LIST, search='name')
+    eq_(['spaceballs', 'gone with the wind', 'titanic'], result)
+
+def test_searching_large_JSON():
+    ''' test searching large JSON file '''
+    result = dictor(LARGE, '0.friends', search='name')
+    eq_(['Patsy Sargent', 'Bailey Carpenter', 'Corina Sherman'], result)
+
 if __name__ == "__main__":
     nose.run()

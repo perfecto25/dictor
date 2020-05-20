@@ -16,3 +16,5 @@ develop-eggs
 lib
 lib64
 .vscode
+bugger.py
+**.pyc
