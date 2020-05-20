@@ -380,8 +380,8 @@ testing is done using Python Nose. Tests are located in 'tests' directory.
 ---
 ## packaging
     python setup.py sdist
-    pip install twine
-    twine upload dist/*
+    sudo pip install twine
+    sudo twine upload dist/*
 
 
 
