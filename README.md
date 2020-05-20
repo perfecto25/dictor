@@ -81,7 +81,7 @@ get details for Dark Helmet
 
     print(dictor(data, 'characters.Dark Helmet.items'))
 
-    [u'Shwartz', u'helmet']
+    >> [u'Shwartz', u'helmet']
 
 
 you can also pass a flag to ignore letter Upper/Lower casing,
@@ -95,7 +95,7 @@ get only the 1st Item of a character
 
     print(dictor(data, 'characters.Dark Helmet.items.0'))
 
-    Shwartz
+    >> Shwartz
 
 ---
 
@@ -105,20 +105,20 @@ by default, dictor will return a None if a dictionary does not contain your sear
 
     print(dictor(data, 'characters.Princess Leia'))
 
-    None
+    >> None
 
 you can provide a default fallback value either by passing 
 default="fallback value" or just placing a fallback string,
 
     print(dictor(data, 'characters.Princess Leia', default='Not in Spaceballs'))
 
-    Not in spaceballs
+    >> Not in spaceballs
 
 or just add a fallback string,
 
     print(dictor(data, 'characters.Princess Leia', 'fallback to this'))
 
-    fallback to this
+    >> fallback to this
 
 if you want to error out on a None value, simply provide a CheckNone flag, a ValueError will be raised.
 
@@ -138,7 +138,7 @@ if you need to pass a variable into search path
     who = "Barfolomew"
     print(dictor(data, "characters.{}.id".format(who)))
 
-    55924
+    >> 55924
 
 if using Python 3, you can also use F-strings
 
@@ -170,7 +170,7 @@ just provide the list index into search path
 
     print(dictor(data, ‘2.color’))
 
-    blue
+    >> blue
 
 ---
 ## Nested List of lists
@@ -215,7 +215,7 @@ dictor will parse each lookup element hierarchicly, starting with top and will w
 
     print(dictor(data, '0.message.1.1.color.2'))
 
-    orange
+    >> orange
 
 
 ---
@@ -236,9 +236,9 @@ searching for dictor(data, 'dirty.harry') will return a None since Dictor sees t
 
 To search for a key with a dot in the name, simply use a Path Separator flag, this allows you to control the separator of keys by using a custom character. (by default, pathsep is set to '.')
 
-    dictor(data, 'dirty.harry/genre', pathsep='/')
+    print(dictor(data, 'dirty.harry/genre', pathsep='/'))
 
-    {'romance'}
+    >> {'romance'}
 
 ---
 ## Searching specific keys
@@ -272,17 +272,63 @@ data = {
 
 simply pass the **search='key_name'** flag
 
-```
-print(dictor(data, 'planets', search='name'))
->> ['Mars', 'Neptune']
-```
+
+    print(dictor(data, 'planets', search='name'))
+    >> ['Mars', 'Neptune']
+
 
 If search key is non existent, dictor will pass a None. In this case you can pass a default fallback value,
 
+    print(dictor(data, 'planets', search='fake_key', default='couldnt find value'))
+    >> couldnt find value
+
+
+if the entire dict structure is a list, ie:
 ```
-print(dictor(data, 'planets', search='fake_key', default='couldnt find value'))
->> couldnt find value
+[
+    {
+        "name": "spaceballs",
+        "genre": "romance"
+    },
+    {
+        "name": "gone with the wind",
+        "genre": "chick flick"
+    },
+    {
+        "name": "titanic",
+        "genre": "comedy"
+    }
+]
 ```
+you can search for all keys directly, ie
+
+    print(dictor(data, search='genre'))
+
+    >> ['romance', 'chick flick', 'comedy']
+
+---
+## Pretty Print
+you can pretty print (human readable JSON output) your result,
+
+    print(dictor(data, pretty=True))
+
+```
+[
+    {
+        "genre": "comedy",
+        "name": "spaceballs"
+    },
+    {
+        "genre": "tragedy",
+        "name": "gone with the wind"
+    },
+    {
+        "genre": "comedy",
+        "name": "titanic"
+    }
+]
+```
+
 
 
 ---
@@ -296,7 +342,7 @@ testing is done using Python Nose. Tests are located in 'tests' directory.
 ---
 ## Release Notes
 ### 0.1.6
-- added ability to search keys, will return a list of key values
+- added ability to search keys, will return a list of key names via Search flag
 - added Pretty flag to pretty print JSON output
 
 ### 0.1.5

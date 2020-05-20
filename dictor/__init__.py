@@ -5,8 +5,7 @@ from __future__ import print_function
 import json
 
 
-
-def dictor(data, path=None, default=None, checknone=False, ignorecase=False, pathsep=".", search=None):
+def dictor(data, path=None, default=None, checknone=False, ignorecase=False, pathsep=".", search=None, pretty=False):
     '''
     Usage:
     get a value from a Dictionary key
@@ -29,15 +28,23 @@ def dictor(data, path=None, default=None, checknone=False, ignorecase=False, pat
     > dictor(data, "employees.Fred Flintstone", ignorecase=True)
     search data for specific keys (will return a list of all keys it finds)
     > dictor(data, "employees", search="name")
+    pretty-print output
+    > dictor(data, "employees", pretty=True)
     '''
+    def __format(data, pretty):
+        ''' formats output if pretty=True '''
+        if pretty:
+            return json.dumps(data, indent=4, sort_keys=True)
+        else:
+            return data
 
     if search is None and (path is None or path == ''):
-        return data
+        return __format(data, pretty)
            
     try:
         if path:
             for key in path.split(pathsep):
-                if isinstance(data, (list, tuple)):    
+                if isinstance(data, (list, tuple)): 
                     val = data[int(key)]
                 else:
                     if ignorecase:
@@ -45,11 +52,15 @@ def dictor(data, path=None, default=None, checknone=False, ignorecase=False, pat
                             if datakey.lower() == key.lower():
                                 key = datakey
                                 break
-                    val = data[key]
+                    if key in data:
+                        val = data[key]
+                    else:
+                        val = None
+                        break
                 data = val
-
+            
         if search:
-            search_ret = []            
+            search_ret = []     
             if isinstance(data, (list, tuple)):
                 for d in data:
                     for key in d.keys():
@@ -71,8 +82,14 @@ def dictor(data, path=None, default=None, checknone=False, ignorecase=False, pat
                 val = default
     except (KeyError, ValueError, IndexError, TypeError, AttributeError):
         val = default
-            
+ 
     if checknone:
         if val is None or val == default:
             raise ValueError('value not found for search path: "%s"' % path)
-    return val
+    
+    
+    if val is None or val == '':
+        return default
+    else:
+        return __format(val, pretty)
+
