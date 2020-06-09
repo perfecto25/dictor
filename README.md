@@ -168,7 +168,7 @@ if the entire JSON structure is a list
 
 just provide the list index into search path
 
-    print(dictor(data, ‘2.color’))
+    print(dictor(data, '2.color'))
 
     >> blue
 
