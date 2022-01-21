@@ -435,7 +435,7 @@ testing is done using Python Nose. Tests are located in 'tests' directory.
 
 ### 0.1.8
 
-- broke down main dictor function into several sub-functions for easier parsing
+- broke down main dictor function into several sub-functions
 - added 'rtype' flag to return type-specific output (int or str)
 
 ### 0.1.7
