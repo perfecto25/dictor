@@ -109,5 +109,21 @@ def test_searching_large_JSON():
     result = dictor(LARGE, '0.friends', search='name')
     eq_(['Patsy Sargent', 'Bailey Carpenter', 'Corina Sherman'], result)
 
+def test_return_type_int():
+    """test returning int type"""
+    result = dictor(BASIC, "conan the barbarian.year", rtype="int")
+    eq_(1983, result)
+
+def test_return_type_str():
+    """test returning str type"""
+    result = dictor(BASIC, "spaceballs.year", rtype="str")
+    eq_("1987", result)
+
+def test_return_invalid_rtype():
+    """ test string to int invalid rtype"""
+    result = dictor(BASIC, "spaceballs.genre", rtype="int")
+    eq_("comedy", result)
+
+
 if __name__ == "__main__":
     nose.run()
