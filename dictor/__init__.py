@@ -4,9 +4,77 @@
 from __future__ import print_function
 import json
 
+def _pretty(data, pretty):
+    """return output in pretty print"""
+    if pretty:
+        return json.dumps(data, indent=4, sort_keys=True)
+    else:
+        return data
 
-def dictor(data, path=None, default=None, checknone=False, ignorecase=False, pathsep=".", search=None, pretty=False):
-    '''Get a value or a list of values from a dictionary key using a path
+
+def _search(data, search, default):
+    """search for specific keys"""
+    search_ret = []
+    if isinstance(data, (list, tuple)):
+        for d in data:
+            for key in d.keys():
+                if key == search:
+                    try:
+                        search_ret.append(d[key])
+                    except (KeyError, ValueError, IndexError, TypeError, AttributeError):
+                        pass
+    else:
+        for key in data.keys():
+            if key == search:
+                try:
+                    search_ret.append(data[key])
+                except (KeyError, ValueError, IndexError, TypeError, AttributeError):
+                    pass
+    if search_ret:
+        val = search_ret
+    else:
+        val = default
+    return val
+
+
+def _findval(data, path, pathsep, ignorecase):
+    """cycle through Dict and find the key's value"""
+    for key in path.split(pathsep):
+        if isinstance(data, (list, tuple)):
+            try:
+                val = data[int(key)]
+            except IndexError:
+                val = None
+        else:
+            if ignorecase:
+                for datakey in data.keys():
+                    if datakey.lower() == key.lower():
+                        key = datakey
+                        break
+            try:
+                if data and key in data:
+                    val = data[key]
+                else:
+                    val = None
+                    break
+            except TypeError:
+                val = None
+        data = val
+    return val
+
+
+def dictor(
+    data,
+    path=None,
+    default=None,
+    checknone=False,
+    ignorecase=False,
+    pathsep=".",
+    search=None,
+    pretty=False,
+    rtype=None,
+):
+    """Get a value or a list of values from a dictionary key using a path
 
     Args:
         data (dict): Input dictionary to be searched in.
@@ -51,64 +119,33 @@ def dictor(data, path=None, default=None, checknone=False, ignorecase=False, pat
         > dictor(data, "employees", search="name")
         pretty-print output
         > dictor(data, "employees", pretty=True)
-    '''
-    def __format(data, pretty):
-        ''' formats output if pretty=True '''
-        if pretty:
-            return json.dumps(data, indent=4, sort_keys=True)
-        else:
-            return data
+        return a value in a specific type format
+        > dictor(data, "employee_id", rtype="int")
+    """
 
-    if search is None and (path is None or path == ''):
-        return __format(data, pretty)
+    ## return entire JSON if no search path specified
+    if all([search is None, path is None]):
+        return _pretty(data, pretty)
 
-    try:
-        if path:
-            for key in path.split(pathsep):
-                if isinstance(data, (list, tuple)):
-                    val = data[int(key)]
-                else:
-                    if ignorecase:
-                        for datakey in data.keys():
-                            if datakey.lower() == key.lower():
-                                key = datakey
-                                break
-                    if key in data:
-                        val = data[key]
-                    else:
-                        val = None
-                        break
-                data = val
-
-        if search:
-            search_ret = []
-            if isinstance(data, (list, tuple)):
-                for d in data:
-                    for key in d.keys():
-                        if key == search:
-                            try:
-                                search_ret.append(d[key])
-                            except (KeyError, ValueError, IndexError, TypeError, AttributeError):
-                                pass
-            else:
-                for key in data.keys():
-                    if key == search:
-                        try:
-                            search_ret.append(data[key])
-                        except (KeyError, ValueError, IndexError, TypeError, AttributeError):
-                            pass
-            if search_ret:
-                val = search_ret
-            else:
-                val = default
-    except (KeyError, ValueError, IndexError, TypeError, AttributeError):
-        val = default
+    if path:
+        val = _findval(data, path, pathsep, ignorecase)
+    if search and path:
+        val = _search(val, search, default)
+    if search and not path:
+        val = _search(data, search, default)
 
     if checknone:
         if val is None or val == default:
             raise ValueError('value not found for search path: "%s"' % path)
 
-    if val is None or val == '':
+    if val is None or val == "":
         return default
-    else:
-        return __format(val, pretty)
+
+    # return specific type
+    if rtype and (type(val) is str or type(val) is int):
+        try:
+            if rtype == "int": val = int(val)
+            if rtype == "str": val = str(val)
+        except ValueError:
+            pass       
+    return _pretty(val, pretty)
