@@ -57,9 +57,6 @@ def _findval(data, path, pathsep, ignorecase):
                     if datakey.lower() == key.lower():
                         key = datakey
                         break
-            
-
-
             try:
                 if data and key in data:
                     val = data[key]
