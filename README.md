@@ -2,7 +2,7 @@
 
 ## An elegant dictionary and JSON handler
 
-Version 0.1.8
+Version 0.1.9
 
 Dictor is a Python 2 and 3 compatible JSON/Dictionary handler.
 
@@ -292,6 +292,15 @@ print(dictor(data, 'dirty.harry/genre', pathsep='/'))
 >> {'romance'}
 ```
 
+you can also use an escape character "\" to escape a dot,
+
+```python
+
+print(dictor(data, "dirty\.harry.genre"))
+
+>>> {'romance'}
+```
+
 ---
 
 ## Searching specific keys
@@ -391,10 +400,9 @@ print(dictor(data, pretty=True))
 
 ---
 
-## Return specific type 
+## Return specific type
 
 if you want to return lookup value in a specific character type (int or str), use the return type (rtype) flag
-
 
 Convert an integer return value into a string
 
@@ -418,7 +426,6 @@ print(dictor(data, "some string value", rtype="int"))
 
 This will only return the desired output type if return value is string or int. If the return value is a dictionary, list or tuple, the original return value will be returned.
 
-
 ---
 
 ## Testing
@@ -432,6 +439,10 @@ testing is done using Python Nose. Tests are located in 'tests' directory.
 ---
 
 ## Release Notes
+
+### 0.1.9
+
+- added escape option for pathsep (can either use pathsep flag or use "\" escape in path)
 
 ### 0.1.8
 

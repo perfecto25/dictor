@@ -62,13 +62,18 @@ def test_complex_dict():
     eq_('nuclear war', result)
 
 def test_pathsep():
-    ''' test parsing down a list and getting dict value '''
+    ''' test parsing down a list and getting dict value with pathsep '''
     result = dictor(BASIC, 'terminator/1/terminator 2/genre/0', pathsep='/')
     eq_('nuclear war', result)
 
 def test_keys_with_different_pathsep():
     ''' test parsing keys with different path separator '''
     result = dictor(BASIC, 'dirty.harry/genre', pathsep="/")
+    eq_('romance', result)
+
+def test_escape_pathsep():
+    ''' test using escape path separator '''
+    result = dictor(BASIC, 'dirty\.harry.genre')
     eq_('romance', result)
 
 def test_ignore_letter_casing():
