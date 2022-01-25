@@ -292,7 +292,7 @@ print(dictor(data, 'dirty.harry/genre', pathsep='/'))
 >> {'romance'}
 ```
 
-you can also use an escape character "\" to escape a dot,
+you can also use an escape character "\\" to escape a dot,
 
 ```python
 
