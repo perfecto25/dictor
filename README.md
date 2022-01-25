@@ -442,7 +442,7 @@ testing is done using Python Nose. Tests are located in 'tests' directory.
 
 ### 0.1.9
 
-- added escape option for pathsep (can either use pathsep flag or use "\" escape in path)
+- added escape option for pathsep (can either use pathsep flag or use "\\" escape in path)
 
 ### 0.1.8
 
