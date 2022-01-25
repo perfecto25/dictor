@@ -39,7 +39,13 @@ def _search(data, search, default):
 
 def _findval(data, path, pathsep, ignorecase):
     """cycle through Dict and find the key's value"""
+    if r'\.' in path:
+        path = path.replace(r"\.", "__dictor__")
+ 
     for key in path.split(pathsep):
+        if '__dictor__' in key:
+            key = key.replace('__dictor__', '.')
+
         if isinstance(data, (list, tuple)):
             try:
                 val = data[int(key)]
@@ -51,6 +57,9 @@ def _findval(data, path, pathsep, ignorecase):
                     if datakey.lower() == key.lower():
                         key = datakey
                         break
+            
+
+
             try:
                 if data and key in data:
                     val = data[key]
