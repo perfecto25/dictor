@@ -4,6 +4,7 @@
 from __future__ import print_function
 import json
 
+
 def _pretty(data, pretty):
     """return output in pretty print"""
     if pretty:
@@ -39,12 +40,12 @@ def _search(data, search, default):
 
 def _findval(data, path, pathsep, ignorecase):
     """cycle through Dict and find the key's value"""
-    if r'\.' in path:
+    if r"\." in path:
         path = path.replace(r"\.", "__dictor__")
- 
+
     for key in path.split(pathsep):
-        if '__dictor__' in key:
-            key = key.replace('__dictor__', '.')
+        if "__dictor__" in key:
+            key = key.replace("__dictor__", ".")
 
         if isinstance(data, (list, tuple)):
             try:
@@ -133,6 +134,8 @@ def dictor(
     if all([search is None, path is None]):
         return _pretty(data, pretty)
 
+    val = None
+
     if path:
         val = _findval(data, path, pathsep, ignorecase)
     if search and path:
@@ -150,8 +153,10 @@ def dictor(
     # return specific type
     if rtype and (type(val) is str or type(val) is int):
         try:
-            if rtype == "int": val = int(val)
-            if rtype == "str": val = str(val)
+            if rtype == "int":
+                val = int(val)
+            if rtype == "str":
+                val = str(val)
         except ValueError:
-            pass       
+            pass
     return _pretty(val, pretty)

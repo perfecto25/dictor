@@ -2,7 +2,7 @@
 
 ## An elegant dictionary and JSON handler
 
-Version 0.1.9
+Version 0.1.10
 
 Dictor is a Python 2 and 3 compatible JSON/Dictionary handler.
 
@@ -439,6 +439,11 @@ testing is done using Python Nose. Tests are located in 'tests' directory.
 ---
 
 ## Release Notes
+
+### 0.1.10
+
+- fixed lookup bug on empty string path, ie ```dictor(data, "")``` now returns None
+- formatted syntax with Black formatter
 
 ### 0.1.9
 

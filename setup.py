@@ -1,16 +1,18 @@
 from setuptools import setup
 
 with open("README.md", "r") as fh:
-      long_description = fh.read()
+    long_description = fh.read()
 
-setup(name='dictor',
-      version='0.1.9',
-      description='an elegant dictionary and JSON handler',
-      long_description=long_description,
-      long_description_content_type="text/markdown",
-      url='https://github.com/perfecto25/dictor',
-      author='mike.reider',
-      author_email='mike.reider@gmail.com',
-      license='MIT',
-      packages=['dictor'],
-      zip_safe=True)
+setup(
+    name="dictor",
+    version="0.1.10",
+    description="an elegant dictionary and JSON handler",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
+    url="https://github.com/perfecto25/dictor",
+    author="mike.reider",
+    author_email="mike.reider@gmail.com",
+    license="MIT",
+    packages=["dictor"],
+    zip_safe=True,
+)
