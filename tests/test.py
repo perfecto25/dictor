@@ -157,5 +157,11 @@ def test_empty_string_path():
     eq_(None, result)
 
 
+def test_malformed_search_path():
+    """test_malformed_search_path"""
+    result = dictor(BASIC, "spaceballs.")
+    eq_(None, result)
+
+
 if __name__ == "__main__":
     nose.run()
