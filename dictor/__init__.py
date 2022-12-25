@@ -46,11 +46,10 @@ def _findval(data, path, pathsep, ignorecase):
     for key in path.split(pathsep):
         if "__dictor__" in key:
             key = key.replace("__dictor__", ".")
-
         if isinstance(data, (list, tuple)):
             try:
                 val = data[int(key)]
-            except IndexError:
+            except (UnboundLocalError, IndexError, ValueError):
                 val = None
         else:
             if ignorecase:
@@ -138,7 +137,7 @@ def dictor(
 
     if path:
         val = _findval(data, path, pathsep, ignorecase)
-    if search and path:
+    if search and path and val:
         val = _search(val, search, default)
     if search and not path:
         val = _search(data, search, default)

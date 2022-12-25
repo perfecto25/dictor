@@ -115,6 +115,12 @@ def test_parsing_large_JSON():
     eq_("Tanisha Saunders", result)
 
 
+def test_parsing_large_JSON_nonexistent():
+    """test parsing large JSON file w nonexistent value"""
+    result = dictor(LARGE, "some.value")
+    eq_(None, result)
+
+
 @raises(ValueError)
 def test_exception():
     """test for non existent index value"""
@@ -161,6 +167,15 @@ def test_malformed_search_path():
     """test_malformed_search_path"""
     result = dictor(BASIC, "spaceballs.")
     eq_(None, result)
+
+
+def test_non_existent_path_search():
+    """test_non_existent_path_search"""
+    result = dictor(BASIC, "nonexistent.subkey", search="abc")
+    eq_(None, result)
+
+    result = dictor(BASIC, "nonexistent.subkey", default="path doesnt exist", search="abc")
+    eq_("path doesnt exist", result)
 
 
 if __name__ == "__main__":
