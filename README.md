@@ -439,6 +439,11 @@ testing is done using Python Nose. Tests are located in 'tests' directory.
 ---
 
 ## Release Notes
+### 0.1.11
+
+- fixed bug with searching non existent path
+- fixed bug with _findval ValueError
+
 
 ### 0.1.10
 

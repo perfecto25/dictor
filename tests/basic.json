@@ -56,7 +56,10 @@
         },
         {
             "terminator 3": {
-                "year": 0
+                "year": 0,
+                "available": "false",
+                "stars": "",
+                "preview": null
             }
         }
     ]
