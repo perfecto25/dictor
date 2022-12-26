@@ -2,7 +2,7 @@
 
 ## An elegant dictionary and JSON handler
 
-Version 0.1.10
+Version 0.1.11
 
 Dictor is a Python 2 and 3 compatible JSON/Dictionary handler.
 
