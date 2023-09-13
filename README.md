@@ -430,15 +430,21 @@ This will only return the desired output type if return value is string or int. 
 
 ## Testing
 
-testing is done using Python Nose. Tests are located in 'tests' directory.
+testing is done using Pytest. Tests are located in 'tests' directory.
 
-    pip install nose
+    pip3 install pytest
 
-    shell> nosetests test.py -v
+    shell> pytest -v test.py
 
 ---
 
 ## Release Notes
+
+### 0.1.12
+
+- removed Nose as testing lib as its unmaintained, added pytest
+-
+
 ### 0.1.11
 
 - fixed bug with searching non existent path
