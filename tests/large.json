@@ -312,6 +312,7 @@
             }
         ],
         "greeting": "Hello, Lakeisha Singleton! You have 4 unread messages.",
-        "favoriteFruit": "banana"
+        "favoriteFruit": "banana",
+        "null": null
     }
 ]

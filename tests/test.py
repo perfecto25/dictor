@@ -178,5 +178,25 @@ def test_non_existent_path_search():
     eq_("path doesnt exist", result)
 
 
+def test_search_for_bools():
+    result = dictor(LARGE, search="isActive", default="Missing key")
+    eq_([False, True, True, False, True, True, False], result)
+
+
+def test_search_for_null():
+    result = dictor(LARGE, search="null", default="Missing key")
+    eq_([None], result)
+
+
+def test_null_value():
+    result = dictor(BASIC, "terminator.2.terminator 3.preview", default="Missing key")
+    eq_(None, result)
+
+
+def test_empty_string_value():
+    result = dictor(BASIC, "terminator.2.terminator 3.stars", default="Missing key")
+    eq_("", result)
+
+
 if __name__ == "__main__":
     nose.run()
