@@ -267,7 +267,8 @@
             }
         ],
         "greeting": "Hello, Horne Le! You have 7 unread messages.",
-        "favoriteFruit": "strawberry"
+        "favoriteFruit": "strawberry",
+        "null": "fake_null"
     },
     {
         "_id": "5d2743afe07142f1e37a1193",
@@ -312,6 +313,7 @@
             }
         ],
         "greeting": "Hello, Lakeisha Singleton! You have 4 unread messages.",
-        "favoriteFruit": "banana"
+        "favoriteFruit": "banana",
+        "null": null
     }
 ]

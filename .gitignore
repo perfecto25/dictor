@@ -1,4 +1,4 @@
-
+.idea
 *.py[cod]
 
 # Packages
@@ -19,3 +19,5 @@ lib64
 bugger.py
 **.pyc
 **venv**
+.pytest_cache
+*/__pycache__
