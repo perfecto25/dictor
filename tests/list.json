@@ -1,14 +1,28 @@
 [
     {
         "name": "spaceballs",
-        "genre": "comedy"
+        "genre": "comedy",
+        "status": false
     },
     {
         "name": "gone with the wind",
-        "genre": "tragedy"
+        "genre": "tragedy",
+        "status": ""
     },
     {
         "name": "titanic",
-        "genre": "comedy"
+        "genre": "comedy",
+        "status": true
+    },
+    {
+        "name": "titanic",
+        "genre": "comedy",
+        "status": null,
+        "subkey1": {
+            "status": "subkey1 status",
+            "subkey2": {
+                "status": "null"
+            }
+        }
     }
 ]

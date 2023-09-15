@@ -2,9 +2,9 @@
 
 ## An elegant dictionary and JSON handler
 
-Version 0.1.11
+**ATTENTION: Dictor version 0.1.13 and up will be dropping support for Python 2**
 
-Dictor is a Python 2 and 3 compatible JSON/Dictionary handler.
+Dictor is a Python JSON and Dictionary (Hash, Map) handler.
 
 Dictor takes a dictionary or JSON data and returns value for a specific key.
 
@@ -371,6 +371,42 @@ you can search for all keys directly, ie
 
     >> ['romance', 'chick flick', 'comedy']
 
+- if a key value in the JSON is false, dictor will convert it to pythonic False
+- if a key value in the JSON is true, dictor will convert it to pythonic True
+- if a key value in the JSON is null, dictor will convert it to pythonic None (unless you provide a default value)
+- if a key value in the JSON is blank or "", dictor will convert it to pythonic None (unless you provide a default value)
+
+so this JSON will be translated by dictor like this,
+
+
+```json
+[
+  {
+    "status": true
+  },
+  {
+    "status": false
+  },
+  {
+    "status": null
+  },
+  {
+    "status": ""
+  }
+]
+```
+
+will be returned as
+
+```
+print(dictor(data, search="status"))
+>> [True, False, None, '']
+
+print(dictor(data, search="status", default="fallback"))
+>> [True, False, 'fallback', '']
+```
+
+
 ---
 
 ## Pretty Print
@@ -430,15 +466,23 @@ This will only return the desired output type if return value is string or int. 
 
 ## Testing
 
-testing is done using Python Nose. Tests are located in 'tests' directory.
+testing is done using Pytest. Tests are located in 'tests' directory.
 
-    pip install nose
+    pip3 install pytest
 
-    shell> nosetests test.py -v
+    shell> cd tests
+    shell> pytest -sv test.py
 
 ---
 
 ## Release Notes
+
+### 0.1.12
+
+- removed Nose as testing lib as its unmaintained, added pytest
+- added fixes by https://github.com/dawid-szaniawski to return empty strings instead of None
+- added searching for key in a nested json/dict structure
+
 ### 0.1.11
 
 - fixed bug with searching non existent path

@@ -1,19 +1,23 @@
 {
     "conan the barbarian": {
         "year": "1983",
-        "genre": "ahnold"
+        "genre": "ahnold",
+        "status": false
     },
     "1492": {
         "year": 1986,
-        "genre": "documentary"
+        "genre": "documentary",
+        "status": true
     },
     "AUSTIN Powers": {
         "year": 1996,
-        "genre": "geopolitical thriller"
+        "genre": "geopolitical thriller",
+        "status": null
     },
     "dirty.harry": {
         "year": 1977,
-        "genre": "romance"
+        "genre": "romance",
+        "status": ""
     },
     "spaceballs": {
         "genre": "comedy",
@@ -39,6 +43,7 @@
         {
             "terminator 1": {
                 "year": 1987,
+                "status": "Nested Status",
                 "genre": [
                     "futureshock",
                     "scifi"
