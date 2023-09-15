@@ -400,10 +400,10 @@ will be returned as
 
 ```
 print(dictor(data, search="status"))
->> [True, False, None, None]
+>> [True, False, None, '']
 
 print(dictor(data, search="status", default="fallback"))
->> [True, False, 'fallback', 'fallback']
+>> [True, False, 'fallback', '']
 ```
 
 
