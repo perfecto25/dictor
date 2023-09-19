@@ -147,7 +147,7 @@ you can provide a default fallback value either by passing
 ```python
 print(dictor(data, 'characters.Princess Leia', default='Not in Spaceballs'))
 
->> Not in spaceballs
+>> Not in Spaceballs
 ```
 
 or just add a fallback string,
@@ -336,7 +336,7 @@ simply pass the `search="key_name"` flag
 
 ```python
 print(dictor(data, 'planets', search='name'))
->> ['Mars', 'Neptune']
+>> ['Mars', 'named after Roman god of war', 'Neptune', 'named after Roman god of ocean']
 ```
 
 If search key is non existent, dictor will pass a None. In this case you can pass a default fallback value,
@@ -374,7 +374,7 @@ you can search for all keys directly, ie
 - if a key value in the JSON is false, dictor will convert it to pythonic False
 - if a key value in the JSON is true, dictor will convert it to pythonic True
 - if a key value in the JSON is null, dictor will convert it to pythonic None (unless you provide a default value)
-- if a key value in the JSON is blank or "", dictor will convert it to pythonic None (unless you provide a default value)
+- if a key value in the JSON is blank or "", dictor will convert it to a blank ""
 
 so this JSON will be translated by dictor like this,
 

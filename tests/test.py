@@ -126,7 +126,7 @@ def test_searching_large_JSON():
     """test searching large JSON file"""
     result = dictor(LARGE, "0.friends", search="name")
     assert result == ["Patsy Sargent", "Bailey Carpenter", "Corina Sherman"]
-    
+
     result = dictor(LARGE, search="company")
     assert result == ['VISUALIX', 'ZORK', 'GRAINSPOT', 'QUANTALIA', 'SUPREMIA', 'PURIA', 'BLEENDOT']
 
@@ -232,7 +232,7 @@ def test_getting_tuple_value():
     }
     result = dictor(data, "hobbies")
     assert result == ("skiing", "archery", "chess")
-    
+
     # test getting tuple from index #2 of a list of elements
     result = dictor(data, "foods.2")
     assert result == ("milk", "cheese", "yogurt")
