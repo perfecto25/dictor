@@ -29,13 +29,15 @@ This method works if parsing a simple key=value structure, for example:
     >>> print(data.get("age", "this key doesnt exist"))
     this key doesnt exist
 
-But this wont work if the dict is a list,
+But this wont work if the dict is inside a list,
 
     >>> data = [{"name": "Joe"}]
     >>> print(data.get("age"))
     Traceback (most recent call last):
     File "<stdin>", line 1, in <module>
     AttributeError: 'list' object has no attribute 'get'
+
+you will need to loop through each list element to get to the key:value
 
 or if the dict has a complex and nested structure, for example if I want to get Joe's age, I need to create a for-loop to parse the hierarchial levels of the dict structure until I reach the "age" key:
 
@@ -93,6 +95,7 @@ sample.json
 now lets get info on all Characters
 
 ```python
+import json
 from dictor import dictor
 
 with open('sample.json') as data:
@@ -100,7 +103,11 @@ with open('sample.json') as data:
 
 print(dictor(data, 'characters'))
 
-{u'Lonestar': {u'items': [u'space winnebago', u'leather jacket'], u'role': u'renegade', u'id': 55923}, u'Dark Helmet': {u'items': [u'Shwartz', u'helmet'], u'role': u'Good is dumb', u'id': 99999}, u'Barfolomew': {u'items': [u'peanut butter jar', u'waggy tail'], u'role': u'mawg', u'id': 55924}, u'Skroob': {u'items': [u'luggage'], u'role': u'Spaceballs CEO', u'id': 12345}}
+
+>>>
+
+{'Lonestar': {'id': 55923, 'role': 'renegade', 'items': ['space winnebago', 'leather jacket']}, 'Barfolomew': {'id': 55924, 'role': 'mawg', 'items': ['peanut butter jar', 'waggy tail']}, 'Dark Helmet': {'id': 99999, 'role': 'Good is dumb', 'items': ['Shwartz', 'helmet']}, 'Skroob': {'id': 12345, 'role': 'Spaceballs CEO', 'items': ['luggage']}}
+
 ```
 
 ---
@@ -110,7 +117,7 @@ get details for Dark Helmet
 ```python
 print(dictor(data, 'characters.Dark Helmet.items'))
 
->> [u'Shwartz', u'helmet']
+>> ['Shwartz', 'helmet']
 ```
 
 you can also pass a flag to ignore letter Upper/Lower casing,
@@ -147,7 +154,7 @@ you can provide a default fallback value either by passing
 ```python
 print(dictor(data, 'characters.Princess Leia', default='Not in Spaceballs'))
 
->> Not in spaceballs
+>> Not in Spaceballs
 ```
 
 or just add a fallback string,
@@ -164,11 +171,12 @@ if you want to error out on a None value, simply provide a CheckNone flag, a Val
 print(dictor(data, 'characters.Princess Leia', checknone=True))
 
 Traceback (most recent call last):
-File "test.py", line 14, in <module>
+  File "test.py", line 7, in <module>
     print(dictor(data, 'characters.Princess Leia', checknone=True))
-File "/github.com/dictor/dictor/__init__.py", line 77, in dictor
-    raise ValueError('missing value for %s' % path)
+  File "/usr/local/lib/python3.10/dist-packages/dictor/__init__.py", line 155, in dictor
+    raise ValueError('value not found for search path: "%s"' % path)
 ValueError: value not found for search path: "characters.Princess Leia"
+
 ```
 
 ---
@@ -336,7 +344,7 @@ simply pass the `search="key_name"` flag
 
 ```python
 print(dictor(data, 'planets', search='name'))
->> ['Mars', 'Neptune']
+>> ['Mars', 'named after Roman god of war', 'Neptune', 'named after Roman god of ocean']
 ```
 
 If search key is non existent, dictor will pass a None. In this case you can pass a default fallback value,
@@ -374,7 +382,7 @@ you can search for all keys directly, ie
 - if a key value in the JSON is false, dictor will convert it to pythonic False
 - if a key value in the JSON is true, dictor will convert it to pythonic True
 - if a key value in the JSON is null, dictor will convert it to pythonic None (unless you provide a default value)
-- if a key value in the JSON is blank or "", dictor will convert it to pythonic None (unless you provide a default value)
+- if a key value in the JSON is blank or "", dictor will convert it to a blank ""
 
 so this JSON will be translated by dictor like this,
 
